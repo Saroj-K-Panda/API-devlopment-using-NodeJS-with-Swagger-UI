@@ -1,0 +1,206 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Saroj Test App
+# during dev, should point to your local machine
+host: localhost:8090
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /getName:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    get:
+      description: Returns 'getName' to the caller
+      # used as the method name of the controller
+      operationId: getName
+      parameters:
+        - name: name
+          in: query
+          description: The name of the person to whom to say Hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/getNameWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /addEmp:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    post:
+      description: Add Employee Record.
+      # used as the method name of the controller
+      operationId: addEmp
+      parameters:
+        - in: header
+          name: Accept-Language
+          type: string
+          required: true
+          default: en-US
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              empId:
+                type: integer
+              empName:
+                type: string
+                description: Employee Name
+              dept:
+                type: string
+                description: Department
+              salary:
+                type: number
+                description: Salary
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/getNameWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /updateEmp:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    put:
+      description: update Employee Record.
+      # used as the method name of the controller
+      operationId: updateEmp
+      parameters:
+        - in: header
+          name: Accept-Language
+          type: string
+          required: true
+          default: en-US
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              empId:
+                type: integer              
+              dept:
+                type: string
+                description: Department
+              salary:
+                type: number
+                description: Salary
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/getNameWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /deleteEmp:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    delete:
+      description: delete Employee Record.
+      # used as the method name of the controller
+      operationId: deleteEmp
+      parameters:
+        - in: header
+          name: Accept-Language
+          type: string
+          required: true
+          default: en-US
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              empId:
+                type: integer                          
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/getNameWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /getEmp:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    get:
+      description: select Employee Record.
+      # used as the method name of the controller
+      operationId: getEmp
+      parameters:
+        - in: header
+          name: Accept-Language
+          type: string
+          required: true
+          default: en-US
+        - in: query
+          name: empId          
+          description: The name of the person to whom to say Hello
+          required: true
+          type: integer                                
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/getNameWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  getNameWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
