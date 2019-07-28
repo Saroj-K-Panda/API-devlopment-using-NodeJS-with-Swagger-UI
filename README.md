@@ -1,1 +1,1 @@
-# Skeleton project for Swagger
+/Swagger.jpg
